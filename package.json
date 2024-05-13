@@ -1,0 +1,41 @@
+{
+  "name": "@gl/main",
+  "private": false,
+  "version": "0.0.03",
+  "type": "module",
+  "repository": {},
+  "types": "dist/lib/main.d.ts",
+  "module": "dist/main.es.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "pub": "vue-tsc && vite build && npm publish",
+    "preview": "vite preview",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "dependencies": {
+    "@fingerprintjs/fingerprintjs": "^4.3.0",
+    "ant-design-vue": "^4.2.1",
+    "axios": "^1.6.8",
+    "js-cookie": "^3.0.5",
+    "jsencrypt": "^3.3.2",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^20.12.10",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "eslint": "^9.2.0",
+    "sass": "^1.77.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0",
+    "vite-plugin-dts": "^3.9.1",
+    "vitepress": "^1.1.4",
+    "vue-tsc": "^2.0.6"
+  }
+}

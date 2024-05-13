@@ -1,0 +1,1 @@
+export { default as GlSvg } from "./glSvg.vue"

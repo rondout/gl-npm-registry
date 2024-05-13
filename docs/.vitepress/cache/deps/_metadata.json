@@ -1,0 +1,37 @@
+{
+  "hash": "da1d0088",
+  "configHash": "4b616ae5",
+  "lockfileHash": "5dfa9e15",
+  "browserHash": "a6d8cc2b",
+  "optimized": {
+    "vue": {
+      "src": "../../../../node_modules/.pnpm/vue@3.4.27_typescript@5.4.5/node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "file": "vue.js",
+      "fileHash": "fcab0764",
+      "needsInterop": false
+    },
+    "vitepress > @vue/devtools-api": {
+      "src": "../../../../node_modules/.pnpm/@vue+devtools-api@7.1.3_vue@3.4.27/node_modules/@vue/devtools-api/dist/index.js",
+      "file": "vitepress___@vue_devtools-api.js",
+      "fileHash": "fd5e6217",
+      "needsInterop": false
+    },
+    "vitepress > @vueuse/core": {
+      "src": "../../../../node_modules/.pnpm/@vueuse+core@10.9.0_vue@3.4.27/node_modules/@vueuse/core/index.mjs",
+      "file": "vitepress___@vueuse_core.js",
+      "fileHash": "a2046a86",
+      "needsInterop": false
+    },
+    "ant-design-vue": {
+      "src": "../../../../node_modules/.pnpm/ant-design-vue@4.2.1_vue@3.4.27/node_modules/ant-design-vue/es/index.js",
+      "file": "ant-design-vue.js",
+      "fileHash": "2d07fe8a",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-3LZ7U3ZR": {
+      "file": "chunk-3LZ7U3ZR.js"
+    }
+  }
+}
