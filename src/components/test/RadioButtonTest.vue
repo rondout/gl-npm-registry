@@ -3,15 +3,15 @@
  * @Author: shufei.han
  * @LastEditors: shufei.han
  * @Date: 2024-05-13 15:34:37
- * @LastEditTime: 2024-05-13 15:52:56
+ * @LastEditTime: 2024-05-16 15:42:55
 -->
 <template>
-    <GlSvg name="gl-icon-bars-regular" />
+    <!-- <GlSvg name="gl-icon-bars-regular" /> -->
+    <!-- <GlRadioButtons v-model:value="state.selectedTab" :options="btnConfigListComputed" :max-tab-count="4" /> -->
     <RadioButtons v-model:value="state.selectedTab" :options="btnConfigListComputed" :max-tab-count="4" />
 </template> 
 
 <script setup lang="ts">
-import { GlSvg } from "@lib/components";
 import RadioButtons from "@libComponents/formFields/glRadioButtons.vue"
 import { reactive } from "vue"
 

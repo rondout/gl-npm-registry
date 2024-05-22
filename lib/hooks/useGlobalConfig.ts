@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description: 全局配置
  * @Author: shufei.han
  * @LastEditors: shufei.han
  * @Date: 2024-05-11 10:04:19

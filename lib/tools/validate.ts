@@ -227,7 +227,7 @@ export const validateZh = (str: string) => {
 }
 
 // 校验正整数
-export const validatePositiveInteger = (str: string) => {
+export const validatePositiveInteger = (str: string | number) => {
     const reg = /^[1-9]\d*$/
-    return reg.test(str)
+    return reg.test(str?.toString())
 }

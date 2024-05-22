@@ -3,7 +3,7 @@
  * @Author: warren
  * @LastEditors: shufei.han
  * @Date: 2024-01-10 11:00:12
- * @LastEditTime: 2024-05-13 10:53:58
+ * @LastEditTime: 2024-05-16 18:10:57
  */
 import jsCookie from 'js-cookie'
 import { getDomainForCookie, GL_ENV_ENUM, isGLCompany } from '@lib/tools/region'
@@ -16,7 +16,7 @@ const FRONT_TOKEN_CUSTOM = 'FRONT_TOKEN_CUSTOM'
 
 /* 判断用哪个 token名称 */
 function getTokenName () {
-    return isGLCompany() ? FRONT_TOKEN : FRONT_TOKEN_CUSTOM
+    return isGLCompany() ? FRONT_TOKEN : FRONT_TOKEN_CUSTOM             
 }
 
 export function getToken () {

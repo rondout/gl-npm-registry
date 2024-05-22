@@ -3,7 +3,7 @@
  * @Author: shufei.han
  * @LastEditors: shufei.han
  * @Date: 2024-05-10 11:37:33
- * @LastEditTime: 2024-05-10 17:41:30
+ * @LastEditTime: 2024-05-17 16:36:52
 -->
 <template>
     <h1>This is Counter component test page</h1>
@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { HCounter } from '@lib/components';
 import { type AnyObject } from '@lib/models';
-import { deepCopy } from '@lib/main';
+import { deepCopy } from '@lib/tools';
 // import {} from "../"
 deepCopy
 const anyObj:AnyObject = {title: "anyObj"}

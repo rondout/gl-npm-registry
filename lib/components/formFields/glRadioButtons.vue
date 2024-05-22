@@ -3,7 +3,7 @@
  * @Author: shufei.han
  * @LastEditors: shufei.han
  * @Date: 2024-03-29 18:09:52
- * @LastEditTime: 2024-05-13 16:15:28
+ * @LastEditTime: 2024-05-16 16:17:40
 -->
 <template>
     <div
@@ -57,7 +57,7 @@
             </div>
         </div>
         <div v-if="multiLine" :class="{'multiline-trigger': true, 'multiline-trigger-open': showMore}" @click="toggleShowMore">
-            <GlSvg name="gl-icon-bars-regular" />
+            <GlSvg name="gl-npm-bars-regular" />
         </div>
     </div>
 </template>
@@ -74,7 +74,7 @@ const props = withDefaults(defineProps<GlRadioButtonProps<T>>(), {
     // 是否展示动画效果，默认为true
     animation: true,
     // 是否以大写的方式展示label，默认为true
-    showTooltip:true,
+    showTooltip:false,
     uppercase: true,
     size: 'large'
 })

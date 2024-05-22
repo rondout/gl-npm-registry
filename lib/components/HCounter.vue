@@ -6,24 +6,27 @@
  * @LastEditTime: 2024-05-10 12:02:49
 -->
 <template>
-    <Button type="primary" @click="add">+</Button>
-    <h1>
-        HCounter: {{count}}
-    </h1>
-    <Button @click="minus">-</Button>
-</template> 
+    <ConfigProvider :theme="{}">
+        <Button type="primary" @click="add">+</Button>
+        <h1>
+            HCounter: {{ count }}
+        </h1>
+        <Button @click="minus">-</Button>
+    </ConfigProvider>
+</template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import {Button} from "ant-design-vue"
+import { Button } from "ant-design-vue"
+import ConfigProvider from './configProvider/ConfigProvider.vue';
 
-const props = defineProps<{defaultValue:number}>()
+const props = defineProps<{ defaultValue: number }>()
 
 const count = ref(props.defaultValue || 0)
 
 const add = () => count.value++
 
 const minus = () => count.value--
-</script> 
+</script>
 
 <style lang="scss" scoped></style>

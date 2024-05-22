@@ -3,28 +3,33 @@
  * @Author: shufei.han
  * @LastEditors: shufei.han
  * @Date: 2024-05-13 11:47:09
- * @LastEditTime: 2024-05-13 12:24:35
+ * @LastEditTime: 2024-05-17 10:42:18
 -->
 <template>
-<Button type="primary" @click="handleLogin">发送登录请求</Button>
-</template> 
+  <Button type="primary" @click="handleLogin(true)">发送登录请求</Button>
+  <Button type="primary" @click="handleLogin(false)">发送失败的登录请求</Button>
+</template>
 
 <script setup lang="ts">
-  import { login } from "@/api";
-import {Button} from "ant-design-vue"
+import { login } from "@/api";
+import { Button } from "ant-design-vue";
 
 const getPparams = async () => {
-
-    return {
-        name: 'lihengtong',
-        password: 'D3nhj3Q4PRkhChjnqQjpOkAfFSYHgp6abTxhUq/zwQA9VW1cuIGE625eq6cSz65QpPFo2SWO/lV7VxVaXnns8g==',
-        deviceId: '17291ed36c4c939e384cfa88fc6ccc68'
-    
-    }
-} 
-  const handleLogin = async () => {
-    login(await getPparams() )
+  return {
+    name: "hanshufei",
+    password:
+      "NvomWRcZLRcl2y5AAcVB5uGGuYv3yprldtaKzbk52+qQzSPgd1diLLdDFVf6KUoD1T03irRw7RVhncVSSmOtNg==",
+    deviceId: "09a8284328adacf2c5355a1b08d63caf",
+  };
+};
+const handleLogin = async (success: boolean) => {
+  try {
+    const data = login((success? await getPparams(): {}));
+    console.log("登录成功", data);
+  } catch (error) {
+    console.log("登录失败", error);
   }
-</script> 
+};
+</script>
 
 <style lang="scss" scoped></style>

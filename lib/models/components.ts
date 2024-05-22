@@ -3,11 +3,11 @@
  * @Author: shufei.han
  * @LastEditors: shufei.han
  * @Date: 2024-04-09 16:39:21
- * @LastEditTime: 2024-05-11 09:09:54
+ * @LastEditTime: 2024-05-17 12:11:08
  */
 import type { AnyObject, SelectOptions } from './base'
 import type { InputProps } from 'ant-design-vue'
-import type { SizeType } from 'ant-design-vue/es/config-provider'
+import type { SizeType, ConfigProviderProps as AntConfigProviderProps} from 'ant-design-vue/es/config-provider'
 import { Languages } from './settings';
 
 // 表单tooltip组件的tip数据类型
@@ -86,5 +86,6 @@ export interface BaseDrawerProps {
 }
 
 export interface ConfigProviderProps {
-  locale: Languages
+  locale: Languages;
+  antConfigProviderProps?: AntConfigProviderProps
 }

@@ -3,69 +3,62 @@
  * @Author: shufei.han
  * @LastEditors: shufei.han
  * @Date: 2024-04-11 09:38:44
- * @LastEditTime: 2024-05-11 10:08:52
+ * @LastEditTime: 2024-05-17 14:45:51
 -->
 <template>
-    <Drawer :rootClassName="customClass"
-              :closable="false"
-              :open="props.open"
-              :maskClosable="props.maskCloseable"
-              :modal="props.modal"
-              @close="handleClose"
-              style="width: unset">
-        <!-- title -->
-        <template #title>
-            <div class="base-drawer-header">
-                <slot name="title">
-                    <div class="base-drawer-title">
-                        {{ props.title }}
+    <!-- <ConfigProvider v-bind="config.antConfigProviderProps"> -->
+        <Drawer :rootClassName="customClass" :closable="false" :open="props.open" :maskClosable="props.maskCloseable"
+            :modal="props.modal" @close="handleClose" style="width: unset">
+            <!-- title -->
+            <template #title>
+                <div class="base-drawer-header">
+                    <slot name="title">
+                        <div class="base-drawer-title">
+                            {{ props.title }}
+                        </div>
+                    </slot>
+                    <div class="base-drawer-close" @click="handleClose">
+                        <GlSvg name="gl-npm-xmark-solid" class="base-drawer-close-icon" />
                     </div>
-                </slot>
-                <div class="base-drawer-close" @click="handleClose">
-                    <GlSvg name="gl-icon-wrong" class="base-drawer-close-icon" />
+                </div>
+            </template>
+            <div :class="{ 'base-drawer-content': true, 'base-drawer-content-with-padding': !props.contentPadding }"
+                :style="{ padding: props.contentPadding }">
+                <!-- content -->
+                <slot />
+            </div>
+            <!-- footer -->
+            <div v-if="props.showFooter" class="base-drawer-footer">
+                <div class="base-drawer-footer-content">
+                    <slot name="footer">
+                        <div class="base-drawer-footer-btns">
+                            <Button v-if="footerBtnConfig.cancel.show" round class="drawer-btn drawer-btn-cancel"
+                                :disabled="confirmLoading" @click="handleClose">
+                                {{ footerBtnConfig.cancel.text }}
+                            </Button>
+                            <Button v-if="footerBtnConfig.ok.show" round class="drawer-btn drawer-btn-ok" type="primary"
+                                :loading="confirmLoading" @click="handleConfirm">
+                                {{ footerBtnConfig.ok.text }}
+                            </Button>
+                        </div>
+                    </slot>
                 </div>
             </div>
-        </template>
-        <div :class="{'base-drawer-content': true, 'base-drawer-content-with-padding': !props.contentPadding}" :style="{padding: props.contentPadding}">
-            <!-- content -->
-            <slot />
-        </div>
-        <!-- footer -->
-        <div v-if="props.showFooter" class="base-drawer-footer">
-            <div class="base-drawer-footer-content">
-                <slot name="footer">
-                    <div class="base-drawer-footer-btns">
-                        <Button v-if="footerBtnConfig.cancel.show"
-                                  round
-                                  class="drawer-btn drawer-btn-cancel"
-                                  :disabled="confirmLoading"
-                                  @click="handleClose">
-                            {{ footerBtnConfig.cancel.text }}
-                        </Button>
-                        <Button v-if="footerBtnConfig.ok.show"
-                                  round
-                                  class="drawer-btn drawer-btn-ok"
-                                  type="primary"
-                                  :loading="confirmLoading"
-                                  @click="handleConfirm">
-                            {{ footerBtnConfig.ok.text }}
-                        </Button>
-                    </div>
-                </slot>
-            </div>
-        </div>
-    </Drawer>
+
+        </Drawer>
+    <!-- </ConfigProvider> -->
 </template>
 
 <script setup lang="ts">
-// import i18n from '@/lang'
+// import i18n from '@/lang'        
 import type { BaseDrawerProps } from '@lib/models/components'
 import type { SizeType } from 'ant-design-vue/es/config-provider'
 import { computed, ref } from 'vue'
 import { Drawer, Button } from 'ant-design-vue';
 import useGlobalConfigInject from '@lib/hooks/useGlobalConfig';
+import GlSvg from '../base/glSvg.vue';
 // const { t } = i18n.global
-const {t} = useGlobalConfigInject()
+const { t } = useGlobalConfigInject()
 
 const props = withDefaults(defineProps<BaseDrawerProps>(), {
     // open
@@ -217,7 +210,7 @@ const handleConfirm = async () => {
         box-sizing: border-box;
         overflow: auto;
     }
-    
+
     .base-drawer-content-with-padding {
         padding: 24px 40px;
     }

@@ -7,7 +7,11 @@
  */
 import JsEncrypt from 'jsencrypt'
 
-/* 加密数据 */
+/**
+ * 
+ * @description 加密数据（字符串） 
+ * @returns 
+ */
 const getEncryptionHex = function (value: string, publicKey = 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAItoR8lrBZ/ZaJZ3XvvgP8I31ImaTwbEPzPElmIZAasWoAzw3InqMVyeL7rTlFS3TFz3HMKBnrFlr463Bu19Tz0CAwEAAQ==' ): string {
     /* eslint-disable */
     const encrypt = new JsEncrypt()
