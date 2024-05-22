@@ -3,7 +3,7 @@
  * @Author: shufei.han
  * @LastEditors: shufei.han
  * @Date: 2024-05-16 16:31:11
- * @LastEditTime: 2024-05-16 16:57:43
+ * @LastEditTime: 2024-05-22 11:08:04
  */
 
 import dayjs, { ConfigType } from "dayjs";
@@ -11,13 +11,17 @@ import dayjs, { ConfigType } from "dayjs";
 
 /**
  *
- * @param time
+ * @param {ConfigType} time
  * @description 格式化时间
  * @returns
  */
 export function format(time: ConfigType) {
   return dayjs(time).format("YYYY-MM-DD HH:mm:ss");
 }
+/**
+* @description 
+* @returns 
+*/
 export function formatMinutesToMMSS(minutes) {
   const totalSeconds = Math.round(minutes * 60);
   const minutesPart = Math.floor(totalSeconds / 60);

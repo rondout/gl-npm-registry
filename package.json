@@ -1,7 +1,7 @@
 {
   "name": "@gl/main",
   "private": false,
-  "version": "0.0.12",
+  "version": "0.0.1",
   "type": "module",
   "repository": {},
   "types": "dist/lib/main.d.ts",
