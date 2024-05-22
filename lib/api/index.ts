@@ -6,10 +6,9 @@ import axios, {
     type AxiosRequestConfig,
 } from "axios";
 // import store from '@/store'
-import { getToken } from "@lib/tools/auth";
 // import { getApiDomain } from '@lib/tools/region'
 // import { showErrorMessage } from '@/api/requestError'
-import { getEncryptionHex } from "@lib/tools/encryption";
+// import { getEncryptionHex } from "@lib/tools/encryption";
 // import { useUserStore } from '@/stores/modules/user'
 import type { BaseResponse } from "@lib/models/request";
 
@@ -27,8 +26,8 @@ export class HttpService {
 
     constructor(
         private config: CreateAxiosDefaults = { timeout: 30000 },
-        private configRequest?: <T = any>(config: InternalAxiosRequestConfig<T>) => void,
-        private configResponse?: (value: AxiosResponse<any, any>) => Promise<AxiosResponse<any, any>>,
+        private configRequest: <T = any>(config: InternalAxiosRequestConfig<T>) => void,
+        private configResponse: (value: AxiosResponse<any, any>) => Promise<AxiosResponse<any, any>>,
         private errorHandler?: ((error: any) => any) | null
     ) {
         this.init();
@@ -38,17 +37,6 @@ export class HttpService {
         this.instance = axios.create({...this.config, apiPrefix: undefined});
         this.instance.interceptors.request.use(
             (config) => {
-                /* 请求头配置token */
-                config.headers.token = getToken() || "";
-                /* 时间戳签名加密 */
-                config.headers.signature = getEncryptionHex(Date.now().toString());
-
-                /**
-                 * @describe 统一处理 formData 传参
-                 * 前提： post 请求
-                 * 定义接口时设置 formData: true； 配置 data 字段
-                 * 参考 \src\api\login.js 的 reqLogin 方法
-                 */
                 if (config.formData) {
                     const formData = new FormData();
                     Object.keys(config.data).forEach((k) => {
@@ -56,34 +44,20 @@ export class HttpService {
                     });
                     config.data = formData;
                 }
-
-                /* config.baseURL = '/cloud-api' 暂时未处理， 都是在接口里面单个写 */
-
-                /* 设置接口地址 */
-                // @ts-ignore
-                const { apiPrefix, SHARE_AREA } = config;
-                if (apiPrefix) {
-                    // config.baseURL = `${getApiDomain(SHARE_AREA)}${apiPrefix}`
-                    /* /cloud-basic 直接用当前域名 */
-                    config.baseURL = apiPrefix;
-                } else {
-                    /* SHARE_AREA  表示分享设备所在的区域，如果没有值就用当前用户或组织所在的区域 */
-                    /* /cloud-api 需要调用对应区域地址 */
-                    // config.baseURL = getApiDomain(SHARE_AREA)
-                }
-
+                
+                // 这里只做formData处理，剩余的各自业务自己处理
                 this.configRequest(config);
 
                 return config;
             },
             (error) => {
-                console.log("返回错误", error); // for debug
                 Promise.reject(error);
             }
         );
 
         this.instance.interceptors.response.use(
             (response) => {
+                
                 return this.configResponse(response);
             },
 
@@ -108,8 +82,8 @@ export class HttpService {
     }
 
     public get = async <T = any, D = any>(url: string,config?: AxiosRequestConfig<D>) => {
-        const result = await this.instance.get<T>(url, config);
-        return result.info;
+        const result = await this.instance.get<T, AxiosResponse<{info: T}>>(url, config);
+        return result.data.info;
     }
 
     public getWithPrefix = async <T = any, D = any>(url: string,config: AxiosRequestConfig<D> = {}) => {
@@ -118,19 +92,20 @@ export class HttpService {
 
     public post = async <T = any, D = any>(url: string,data?: D,
         config?: AxiosRequestConfig<D>) => {
-        const result = await this.instance.post<T>(url, data, config);
-        return result.info as T;
+        const result = await this.instance.post<T, AxiosResponse<{info: T}>>(url, data, config);
+        return result.data.info as T;
     }
 
     public postWithPrefix = async <T = any, D = any>(url: string,data?: D,
         config?: AxiosRequestConfig<D>) => {
-        return this.post<T, D>(url, data, { ...config, apiPrefix: this.config.apiPrefix });
+        const result = await this.post<T, D>(url, data, { ...config, apiPrefix: this.config.apiPrefix });
+        return result
     }
 
     public put = async <T = any, D = any>(url: string,data?: D,
         config?: AxiosRequestConfig<D>) => {
-        const result = await this.instance.put<T>(url, data, config);
-        return result.info as T;
+        const result = await this.instance.put<T, AxiosResponse<{info: T}>>(url, data, config);
+        return result.data.info as T;
     }
 
     public putWithPrefix = async <T = any, D = any>(url: string,data?: D,
@@ -139,7 +114,7 @@ export class HttpService {
     }
 
     public delete = async <T = any, D = any>(url: string,config?: AxiosRequestConfig<D>) => {
-        const result = await this.instance.delete<T>(url, config);
-        return result.info as T;
+        const result = await this.instance.delete<T, AxiosResponse<{info: T}>>(url, config);
+        return result.data.info as T;
     }
 }

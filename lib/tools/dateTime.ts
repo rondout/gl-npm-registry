@@ -3,7 +3,7 @@
  * @Author: shufei.han
  * @LastEditors: shufei.han
  * @Date: 2024-05-16 16:31:11
- * @LastEditTime: 2024-05-22 11:08:04
+ * @LastEditTime: 2024-05-22 14:35:56
  */
 
 import dayjs, { ConfigType } from "dayjs";
@@ -11,18 +11,19 @@ import dayjs, { ConfigType } from "dayjs";
 
 /**
  *
- * @param {ConfigType} time
- * @description 格式化时间
+ * @param time 时间
+ * @param format 格式化格式
+ * @description 格式化时间 默认的格式为 'YYYY-MM-DD HH:mm:ss'
  * @returns
  */
-export function format(time: ConfigType) {
-  return dayjs(time).format("YYYY-MM-DD HH:mm:ss");
+export function format(time: ConfigType, format = "YYYY-MM-DD HH:mm:ss") {
+  return dayjs(time).format(format);
 }
 /**
-* @description 
+* @description 将number类型的分钟数转化为mm:ss格式的字符串，比如 12.5 => '12:30'  12.8 => '12:48'  
 * @returns 
 */
-export function formatMinutesToMMSS(minutes) {
+export function formatMinutesToMMSS(minutes: number) {
   const totalSeconds = Math.round(minutes * 60);
   const minutesPart = Math.floor(totalSeconds / 60);
   const secondsPart = totalSeconds % 60;
@@ -30,22 +31,27 @@ export function formatMinutesToMMSS(minutes) {
     secondsPart
   ).padStart(2, "0")}`;
 }
-export function convertTimeToMinutes(timeString) {
+/**
+* @description 把时间转化为分钟数,只是简单的取分钟，不做四舍五入，比如：15:46 => 15  15:10 => 15
+* @returns 
+*/
+export function convertTimeToMinutes(timeString: string) {
   // const [minutes, seconds] = timeString.split(':').map(Number)
   return timeString.split(":").map(Number)[0];
 }
-
-export function parseTime(time: ConfigType, cFormat: string) {
+/**
+* @description 解析时间为字符串
+* @returns 
+*/
+export function parseTime(time: ConfigType, format = "{y}-{m}-{d} {h}:{i}:{s}" ) {
   if (arguments.length === 0) {
     return null;
   }
   if (time === null) {
-    // if this device never login in, its online/office time is 'null' 如果有设备从来没有上线过，其online/office time 是 null
     return null;
   }
 
-  const format = cFormat || "{y}-{m}-{d} {h}:{i}:{s}";
-  let date;
+  let date: any;
   if (typeof time === "object") {
     date = time;
   } else {

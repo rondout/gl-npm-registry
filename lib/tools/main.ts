@@ -1,8 +1,8 @@
 import { AnyObject, BaseData } from "@lib/models";
 import ClipboardJS from 'clipboard'
 
-/** * 
- * @description: 获取字符串长度
+/**
+ * @description: 获取字符串真实的长度
  */
 export const getCharRealLength = (str: string) => {
   if (typeof str !== "string") {
@@ -23,26 +23,10 @@ export const getCharRealLength = (str: string) => {
   return realLength;
 };
 
-export function scrollTo(element, to, duration) {
-  if (duration <= 0) return;
-  const difference = to - element.scrollTop;
-  const perTick = (difference / duration) * 10;
-  setTimeout(() => {
-    console.log(new Date());
-    element.scrollTop = element.scrollTop + perTick;
-    if (element.scrollTop === to) return;
-    scrollTo(element, to, duration - 10);
-  }, 10);
-}
-
-export function getTime(type) {
-  if (type === "start") {
-    return new Date().getTime() - 3600 * 1000 * 24 * 90;
-  } else {
-    return new Date(new Date().toDateString());
-  }
-}
-
+/**
+* @description 防抖函数
+* @returns 
+*/
 export function debounce(func: Function, wait = 300, immediate = false) {
   let timeout: NodeJS.Timeout, args, context, timestamp: number, result;
 
@@ -78,7 +62,10 @@ export function debounce(func: Function, wait = 300, immediate = false) {
     return result;
   };
 }
-
+/**
+* @description 节流函数
+* @returns 
+*/
 export const throttle = (fn: Function, delay: number): Function => {
   let throttleTimer: NodeJS.Timeout
   return (...args: unknown[]) => {
@@ -144,7 +131,7 @@ export function isObject<T>(value: T): boolean {
  * @description 判断两个对象的数据是否一致（只能判断一层，浅比较）
  * @returns
  */
-function equalObject<T extends AnyObject>(obj1: T, obj2: T) {
+export function equalObject<T extends AnyObject>(obj1: T, obj2: T) {
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
 
@@ -167,7 +154,7 @@ function equalObject<T extends AnyObject>(obj1: T, obj2: T) {
  * @param {*} arr2
  * @return {Boolean}
  */
-export function equalObjectArray(arr1: any, arr2: any): boolean {
+export function equalObjectArray<T = any>(arr1: Array<T>, arr2: Array<T>): boolean {
   if (!(arr1 instanceof Array) || !(arr2 instanceof Array)) return false;
   if (arr1.length !== arr2.length) return false;
 
@@ -221,11 +208,17 @@ export function findChangeData<T extends BaseData>(
 
   return changeArray;
 }
-
+/**
+* @description 数组去重（简单的利用Set去重）
+* @returns 
+*/
 export function uniqueArr<T>(arr: Array<T>): Array<T> {
   return Array.from(new Set(arr));
 }
-
+/**
+* @description 获取这个数据的类型 比如 getJsonType(new Array()) => 'Array'
+* @returns 
+*/
 export function getJsonType<T>(val: T) {
   return Object.prototype.toString.call(val).split(" ")[1].split("]")[0];
 }
@@ -275,12 +268,20 @@ export const versionCompare = (version1: string| string[], version2: string| str
 
   return 0;
 };
+/**
+ * @description 获取 配置下发时 需要的 api
+ * @param {*} version 当前版本
+ */
+export const getBatchApi = (version) => {
+  /* 小于 4.0 和 大于等于4.0  用不同的 api 地址 */
+  return versionCompare(version, '4.0') < 2 ? 'set_batch_config' : '/cloud/goodcloud/batch_set'
+}
 
 /**
- * @description: 获取浏览器
+ * @description: 获取浏览器基本信息
  * @return { Array } [浏览器名称, 浏览器版本]
  */
-export const getBrowserInfo = () => {
+export const getBrowserInfo = ():[string, number] => {
   const ua = navigator.userAgent;
   let M =
     ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) ||
@@ -293,6 +294,7 @@ export const getBrowserInfo = () => {
   if (M[1] === "Chrome") {
     tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
     if (tem != null)
+      // @ts-ignore
       return tem.slice(1).join(" ").replace("OPR", "opera").split(" ");
   }
   M = M[2] ? [M[1], M[2]] : [navigator.appCodeName, navigator.appVersion, "-?"];
@@ -300,7 +302,10 @@ export const getBrowserInfo = () => {
   return [M[0].toLocaleLowerCase(), Number(M[1])];
 };
 
-// 对modelList进行处理，相同label只保留一项
+/**
+* @description 对modelList进行处理，相同label只保留一项 
+* @returns 
+*/
 export const filterModelList = <T extends {label?: string}>(modelList: T[]) => {
   const arr = [];
   modelList.forEach((item) => {
@@ -311,7 +316,10 @@ export const filterModelList = <T extends {label?: string}>(modelList: T[]) => {
   });
   return arr;
 };
-
+/**
+* @description 复制字符串到粘贴板
+* @returns 
+*/
 export function copyText (text:string) {
   return new Promise((resolve, reject) => {
     const fakeElement = document.createElement('button')
@@ -331,7 +339,10 @@ export function copyText (text:string) {
     fakeElement.click()
   })
 }
-// 将mac地址转为大写并隔两个加一个冒号
+/**
+* @description 将mac地址转为大写并隔两个加一个冒号 
+* @returns 
+*/
 export function macAddrFormatter (mac: string) {
   if (!mac) return ''
   return mac.toUpperCase().replace(/(.{2})/g, '$1:').slice(0, 17)

@@ -1,25 +1,36 @@
-/* eslint-disable max-len */
-import useGlobalConfigInject from "@lib/hooks/useGlobalConfig"
-/* 合法 username */
+/**
+ * @description 用户名校验结果
+ */
+export enum UsernameValidateResult {
+    /** 长度校验失败 */
+    LENGTH_ERROR = 'length_error',
+    /** 第一个字符校验失败 */
+    FIRST_CHAR_ERROR = 'firstCharacter_error',
+    /** 特殊字符校验失败 */
+    SPECIAL_CHAR_ERROR = 'specialCharacter_error',
+    /** 校验成功 */
+    VALID = 'pass'
+}
+
 /**
  * 
  * @param name 
  * @returns 返回true或者字符串（i18n索引），如果返回true则代表校验成功
  */
-export function isValidUsername (name: string) {
+export function isValidUsername (name: string):UsernameValidateResult {
     if (name.length < 5 || name.length > 15) {
-        return 'usernameLengthError'
+        return UsernameValidateResult.LENGTH_ERROR
     }
     const regCheckFirstCharacter = /^[0-9a-zA-Z]$/
     const strFirstCharacter = name.charAt(0)
     if (!regCheckFirstCharacter.test(strFirstCharacter)) {
-        return 'usernameFirstCharacterValidateError'
+        return UsernameValidateResult.FIRST_CHAR_ERROR
     }
     const reg = /^[0-9a-zA-Z][0-9a-zA-Z_.-]+$/
     if (!reg.test(name)) {
-        return 'usernameSpecialCharacterValidateError'
+        return UsernameValidateResult.SPECIAL_CHAR_ERROR
     }
-    return true
+    return UsernameValidateResult.VALID
 }
 
 /* 合法url 必须带 http 或 https */
@@ -164,31 +175,6 @@ export const checkPassword = (type: PwdCheckType, value: any) => {
         return checkAllowCharacter(value)
     } else {
         return checkPasswordSecurity(value)
-    }
-}
-
-/* 表单校验密码公共方法 */
-export const validatePasswordCommonFn = (value: string) => {
-    // 校验长度是否不对 
-    const lengthValid = value.length >= 10 && value.length <= 32
-    // 校验字符规则是否满足
-    const charValid = checkPassword(PwdCheckType.CHECK_CHAR, value)
-    // 校验安全规则是否满足 
-    const securityValid = checkPassword(PwdCheckType.CHECK_SECURITY, value)
-    const validateInfos = [
-        {valid: lengthValid, tip: 'validate.passwordTips'},
-        {valid: charValid, tip: 'validate.allowPasswordTips'},
-        {valid: securityValid, tip: 'validate.securityPasswordTips'},
-    ]
-    return validateInfos
-}
-/* 表单校验密码确认公共方法 */
-export const validateConfirmPasswordCommonFn = (password: any, confirmPassword: any, callback: (arg?: Error) => void) => {
-    const {t} = useGlobalConfigInject()
-    if (password === confirmPassword) {
-        callback()
-    } else {
-        callback(new Error(t('confirmPasswordValidateError')))
     }
 }
 
