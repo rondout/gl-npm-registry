@@ -104,7 +104,7 @@ export function validateIPSubnetMask (ip: string) {
 
 /* 验证端口1 - 65535 不能有 65530 */
 export function validatePortS2S (port: string) {
-    // 正则表达式匹配范围 1-65535，且不等于 65530
+    /** 正则表达式匹配范围 1-65535，且不等于 65530 */
     const validPortRegex = /^(?!65530$)([1-9]\d{0,4}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$/
     return validPortRegex.test(port)
 }
@@ -128,7 +128,7 @@ export function isValidTwoFACode (code: string): boolean {
     return re.test(code)
 }
 
-/*
+/**
 validate LAN ip
 127.  0.0.0 – 127.255.255.255     127.0.0.0 /8
  10.  0.0.0 –  10.255.255.255      10.0.0.0 /8
@@ -141,10 +141,10 @@ export function validateLanIP (ip: string) {
     return reg.test(ip)
 }
 
-// 至少需要大写字母、小写字母、数字、符号其中的两项
+/** 至少需要大写字母、小写字母、数字、符号其中的两项 */
 // eslint-disable-next-line max-len
 const passwordSecurityReg = /((?=.*[!@#$%&*()+=,.\x2d\x5c\x5b\x5d\x5e?{}:"'`~])(?=.*\d))|((?=.*[!@#$%&*()+=,.\x2d\x5c\x5b\x5d\x5e?{}:"'`~])(?=.*[a-z]))|((?=.*[!@#$%&*()+=,.\x5f\x2d\x5c\x5b\x5d\x5e?{}:"'`~])(?=.*[A-Z]))|((?=.*\d)(?=.*[a-z]))|((?=.*\d)(?=.*[A-Z]))|((?=.*[a-z])(?=.*[A-Z]))/
-// 允许字符，英文、数字、英文特殊字符
+/** 允许字符，英文、数字、英文特殊字符 */
 const allowCharacterReg = /^[!@#$%&*()+=,.\x5f\x2d\x5c\x5b\x5d\x5e\x7c?{}:"'`~a-zA-Z0-9]+$/
 const checkPasswordMap = [
     {}, // 占位
@@ -169,7 +169,7 @@ export enum PwdCheckType {
     CHECK_CHAR,
     CHECK_SECURITY
 }
-/* 校验密码 */
+/** 校验密码 */
 export const checkPassword = (type: PwdCheckType, value: any) => {
     if (type === PwdCheckType.CHECK_CHAR) {
         return checkAllowCharacter(value)
@@ -178,41 +178,41 @@ export const checkPassword = (type: PwdCheckType, value: any) => {
     }
 }
 
-// 校验子网掩码
+/** 校验子网掩码 */
 export const validateNetmask = (ip: string) => {
     // eslint-disable-next-line max-len
     const reg = /^(254|252|248|240|224|192|128)\.0\.0\.0$|^(255\.(254|252|248|240|224|192|128|0)\.0\.0)$|^(255\.255\.(254|252|248|240|224|192|128|0)\.0)$|^(255\.255\.255\.(254|252|248|240|224|192|128|0))$/
     return reg.test(ip)
 }
-// 校验IP地址方法
+/** 校验IP地址方法 */
 export const validateIP = (ip: string) => {
     const reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
     return reg.test(ip)
 }
-// ipv6 CIDR 正则
+/** ipv6 CIDR 正则 */
 export const validateIPV6CIDR = (ip: string) => {
     const reg = /^(([0-9a-fA-F]{1,4}:){7,7}([0-9a-fA-F]{1,4}|:)|([0-9a-fA-F]{1,4}:){1,6}(:[0-9a-fA-F]{1,4}|:)|([0-9a-fA-F]{1,4}:){1,5}((:[0-9a-fA-F]{1,4}){1,2}|:)|([0-9a-fA-F]{1,4}:){1,4}((:[0-9a-fA-F]{1,4}){1,3}|:)|([0-9a-fA-F]{1,4}:){1,3}((:[0-9a-fA-F]{1,4}){1,4}|:)|([0-9a-fA-F]{1,4}:){1,2}((:[0-9a-fA-F]{1,4}){1,5}|:)|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6}|:)|:((:[0-9a-fA-F]{1,4}){1,7}|:))\/((?:[0-9]|[1-9][0-9]|1[0-1][0-9]|12[0-8]))$/
     return reg.test(ip)
 }
-// 校验IPV6地址方法
+/** 校验IPV6地址方法 */
 export const validateIPV6 = (ip: string) => {
     const reg = /^(^([0-9a-fA-F]{1,4}:){7,7}([0-9a-fA-F]{1,4}|:)|([0-9a-fA-F]{1,4}:){1,6}(:[0-9a-fA-F]{1,4}|:)|([0-9a-fA-F]{1,4}:){1,5}((:[0-9a-fA-F]{1,4}){1,2}|:)|([0-9a-fA-F]{1,4}:){1,4}((:[0-9a-fA-F]{1,4}){1,3}|:)|([0-9a-fA-F]{1,4}:){1,3}((:[0-9a-fA-F]{1,4}){1,4}|:)|([0-9a-fA-F]{1,4}:){1,2}((:[0-9a-fA-F]{1,4}){1,5}|:)|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6}|:)|:((:[0-9a-fA-F]{1,4}){1,7}|:))$/
     return reg.test(ip)
 }
 
-// 校验域名方法
+/** 校验域名方法 */
 export const validateDomain = (domain: string) => {
     const reg = /^([a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)$/
     return reg.test(domain)
 }
 
-// 校验是否包含中文和中文字符
+/** 校验是否包含中文和中文字符 */
 export const validateZh = (str: string) => {
     const reg = /([\u4E00-\u9FA5]|[\uFE30-\uFFA0])/gi
     return reg.test(str)
 }
 
-// 校验正整数
+/** 校验正整数 */
 export const validatePositiveInteger = (str: string | number) => {
     const reg = /^[1-9]\d*$/
     return reg.test(str?.toString())

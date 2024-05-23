@@ -6,7 +6,10 @@
  * @LastEditTime: 2024-05-22 11:02:47
  */
 import fp from '@fingerprintjs/fingerprintjs'
-
+/**
+* @description 获取设备指纹（唯一标识）
+* @returns 返回唯一标识
+*/
 export async function getFp (name:string) {
     // @ts-ignore
     const fpPromise = fp.load({ monitoring: false })

@@ -6,16 +6,26 @@
  * @LastEditTime: 2024-04-09 10:16:09
  */
 import { type BaseData } from './base'
-// 后端返回的统一数据结构
+/**
+* @description 后端返回的统一数据结构 
+*/
 export interface BaseResponse<T = any> {
     code: number;
     info: T;
     msg: string;
 }
 
+/**
+* @description 后端返回的列表数据的info字段的统一数据结构
+*/
 export interface TableDataResponse<T extends BaseData = BaseData> {
     records: T[];
     total: number;
     size: number ;
     current: number;
 }
+
+/**
+* @description 后端返回的列表数据的数据结构
+*/
+export interface TableResponse extends BaseResponse<TableDataResponse> {}

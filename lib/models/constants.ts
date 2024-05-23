@@ -7,5 +7,5 @@
  */
 import { InjectionKey } from "vue";
 import { ConfigProviderProps } from "./components";
-
+/** 全局provide和inject的key */
 export const BASE_PROVIDER_INJECTION_KEY = Symbol() as InjectionKey<ConfigProviderProps>
