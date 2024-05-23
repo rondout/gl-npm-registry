@@ -1,7 +1,7 @@
 {
   "name": "@gl/main",
   "private": false,
-  "version": "0.0.14",
+  "version": "0.0.19",
   "type": "module",
   "repository": {},
   "types": "dist/lib/main.d.ts",
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^4.3.0",
-    "@gl/main": "^0.0.3",
+    "@gl/main": "^0.0.14",
     "ant-design-vue": "^4.2.1",
     "axios": "^1.6.8",
     "clipboard": "^2.0.11",

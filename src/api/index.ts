@@ -3,7 +3,7 @@
  * @Author: shufei.han
  * @LastEditors: shufei.han
  * @Date: 2024-05-15 09:30:08
- * @LastEditTime: 2024-05-22 17:58:46
+ * @LastEditTime: 2024-05-23 10:28:18
  */
 import { HttpService } from "@lib/api";
 import { AnyObject } from "@lib/models";
@@ -20,6 +20,8 @@ export const http = new HttpService(
         // /* 时间戳签名加密 */
         // config.headers.signature = getEncryptionHex(Date.now().toString())
         /* 设置接口地址 */
+        console.log({config});
+        
         const { apiPrefix } = config
         if (apiPrefix) {
             // config.baseURL = `${getApiDomain(SHARE_AREA)}${apiPrefix}`
@@ -66,10 +68,9 @@ export const http = new HttpService(
 
             return Promise.reject(response.data)
         }
-
         console.log(response)
 
-        return response.data
+        return response
     },
     // 错误处理
     (error) => {
@@ -96,5 +97,7 @@ export const http = new HttpService(
         })
     }
 )
-
-export const login = (data: AnyObject) => http.postWithPrefix('/cloud/v2/auth/login', data, {formData: true})
+export const login = (data: AnyObject) => http.postWithPrefix<string>('/cloud/v2/auth/login', data, {formData: true})
+export const loginOld = (data: AnyObject) => http.httpApiPrefixCloudBasic<string>({
+    url:'/cloud/v2/auth/login',data,formData: true, method:'post'
+})
