@@ -90,6 +90,8 @@ export interface BaseDrawerProps {
 * @returns 
 */ 
 export interface ConfigProviderProps {
+  /** 语言 */
   locale: Languages;
+  /** AntDesign有关的配置 */
   antConfigProviderProps?: AntConfigProviderProps
 }

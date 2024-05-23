@@ -1,16 +1,4 @@
-/**
- * @description 用户名校验结果
- */
-export enum UsernameValidateResult {
-    /** 长度校验失败 */
-    LENGTH_ERROR = 'length_error',
-    /** 第一个字符校验失败 */
-    FIRST_CHAR_ERROR = 'firstCharacter_error',
-    /** 特殊字符校验失败 */
-    SPECIAL_CHAR_ERROR = 'specialCharacter_error',
-    /** 校验成功 */
-    VALID = 'pass'
-}
+import { PwdCheckType, UsernameValidateResult } from "@lib/models"
 
 /**
  * 
@@ -87,16 +75,13 @@ export function isValidPhoneNumber (phone: string): boolean {
     const reg = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
     return reg.test(phone)
 }
-
+/** 校验邮箱验证码 */
 export function isValidateEmailCode (code: string) {
     const re = /^[0-9]{4}$/
     return re.test(code)
 }
 
-/*
-validate ip with subnet mask
-eg: 192.168.1.0/24
-*/
+/** validate ip with subnet mask eg: 192.168.1.0/24 */
 export function validateIPSubnetMask (ip: string) {
     const reg = /([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(\.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}\/\d+/
     return reg.test(ip)
@@ -153,22 +138,21 @@ const checkPasswordMap = [
         passwordSecurityReg,
     },
 ]
-export const checkAllowCharacter = (value: string, index = 1) => { /* 验证是否为允许的字符 */
+/* 验证是否为允许的字符 */
+export const checkAllowCharacter = (value: string, index = 1) => { 
     if (index <= 0) {
         return allowCharacterReg.test(value)
     }
     return checkPasswordMap[index].allowCharacterReg.test(value)
 }
-export const checkPasswordSecurity = (value: string, index = 1) => { /* 验证是否符合字符种类 */
+/* 验证是否符合字符种类 */
+export const checkPasswordSecurity = (value: string, index = 1) => { 
     if (index <= 0) {
         return true
     }
     return checkPasswordMap[index].passwordSecurityReg.test(value)
 }
-export enum PwdCheckType {
-    CHECK_CHAR,
-    CHECK_SECURITY
-}
+
 /** 校验密码 */
 export const checkPassword = (type: PwdCheckType, value: any) => {
     if (type === PwdCheckType.CHECK_CHAR) {

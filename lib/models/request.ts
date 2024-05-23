@@ -3,7 +3,7 @@
  * @Author: shufei.han
  * @LastEditors: shufei.han
  * @Date: 2024-04-09 09:26:35
- * @LastEditTime: 2024-04-09 10:16:09
+ * @LastEditTime: 2024-05-23 18:26:49
  */
 import { type BaseData } from './base'
 /**
@@ -28,4 +28,4 @@ export interface TableDataResponse<T extends BaseData = BaseData> {
 /**
 * @description 后端返回的列表数据的数据结构
 */
-export interface TableResponse extends BaseResponse<TableDataResponse> {}
+export interface TableResponse<T extends BaseData = BaseData> extends BaseResponse<TableDataResponse<T>> {}
