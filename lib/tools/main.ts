@@ -182,7 +182,7 @@ export function findChangeData<T extends BaseData>(
     return [];
   }
 
-  const changeArray = [];
+  const changeArray: T[] = [];
   const maxLength = Math.max(oldArray.length, newArray.length);
 
   for (let i = 0; i < maxLength; i++) {

@@ -3,7 +3,7 @@
  * @Author: shufei.han
  * @LastEditors: shufei.han
  * @Date: 2024-04-09 16:39:21
- * @LastEditTime: 2024-05-23 11:24:31
+ * @LastEditTime: 2024-05-23 14:26:23
  */
 import type { AnyObject, SelectOptions } from './base'
 import type { InputProps } from 'ant-design-vue'
@@ -58,7 +58,7 @@ export type FormValidateInfo<T extends AnyObject = AnyObject> = Map<
 export interface BaseDrawerProps {
   open: boolean;
   title: string;
-  /** content */ padding
+  /** content */ 
   contentPadding?:string | number;
   /** 是否显示遮罩层 */
   modal?: boolean;
@@ -90,6 +90,8 @@ export interface BaseDrawerProps {
 * @returns 
 */ 
 export interface ConfigProviderProps {
+  /** 语言 */
   locale: Languages;
+  /** AntDesign有关的配置 */
   antConfigProviderProps?: AntConfigProviderProps
 }
